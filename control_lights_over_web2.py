@@ -81,6 +81,14 @@ while True:
         request = str(request)
         led0on= request.find('led0on')
         led0off= request.find('led0off')
+        led1on= request.find('led1on')
+        led1off= request.find('led1off')
+        led2on= request.find('led2on')
+        led2off= request.find('led2off')
+        led3on= request.find('led3on')
+        led3off= request.find('led3off')
+        led4on= request.find('led4on')
+        led4off= request.find('led4off')
         
         print('led0on = ' + str(led0on))
         print('led0off = ' + str(led0off))
@@ -92,6 +100,40 @@ while True:
         elif led0off == 8:
             print("LED0 OFF")
             strip.set_pixel(0, (0,0,0))
+            strip.show()
+            
+        elif led1on == 8:
+            print("LED1 ON")
+            strip.set_pixel(1, (0,255,0))
+            strip.show()            
+        elif led1off == 8:
+            print("LED1 OFF")
+            strip.set_pixel(1, (0,0,0))
+            strip.show()
+            
+        elif led2on == 8:
+            print("LED2 ON")
+            strip.set_pixel(2, (0,255,0))
+            strip.show()            
+        elif led2off == 8:
+            print("LED2 OFF")
+            strip.set_pixel(2, (0,0,0))
+            strip.show()
+        elif led3on == 8:
+            print("LED3 ON")
+            strip.set_pixel(3, (0,255,0))
+            strip.show()            
+        elif led3off == 8:
+            print("LED3 OFF")
+            strip.set_pixel(3, (0,0,0))
+            strip.show()
+        elif led4on == 8:
+            print("LED4 ON")
+            strip.set_pixel(4, (0,255,0))
+            strip.show()            
+        elif led4off == 8:
+            print("LED4 OFF")
+            strip.set_pixel(4, (0,0,0))
             strip.show()
         
         response = html 
