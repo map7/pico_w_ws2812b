@@ -22,6 +22,21 @@ html ="""
     
     <body>
     <h1>NeoPixel Control</h1>
+    
+    <form>
+        <button name="led0on" value="on" type=submit>Button 0 on</button>
+        <button name="led1on" value="on" type=submit>Button 1 on</button>
+        <button name="led2on" value="on" type=submit>Button 2 on</button>
+        <button name="led3on" value="on" type=submit>Button 3 on</button>
+        <button name="led4on" value="on" type=submit>Button 4 on</button>
+        <br />
+        <button name="led0off" value="off" type=submit>Button 0 off</button>
+        <button name="led1off" value="off" type=submit>Button 1 off</button>
+        <button name="led2off" value="off" type=submit>Button 2 off</button>
+        <button name="led3off" value="off" type=submit>Button 3 off</button>
+        <button name="led4off" value="off" type=submit>Button 4 off</button>
+    </form>
+    
     </body>
 </html>
 """
@@ -57,16 +72,34 @@ s.listen(1)
 print('listening on', addr)
 
 while True:
-    cl, addr = s.accept()
-    cl_file = cl.makefile('rwb', 0)
+    try:
+        cl, addr = s.accept()
+        cl_file = cl.makefile('rwb', 0)
+        request = cl.recv(1024)
+        print("request:")
+        print(request)
+        request = str(request)
+        led0on= request.find('led0on')
+        led0off= request.find('led0off')
         
-    while True:
-        line = cl_file.readline()
-        if not line or line == b'\r\n':
-            break
-    
-    response = html 
-    
-    cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
-    cl.send(response)
-    cl.close()
+        print('led0on = ' + str(led0on))
+        print('led0off = ' + str(led0off))
+        
+        if led0on == 8:
+            print("LED0 ON")
+            strip.set_pixel(0, (0,255,0))
+            strip.show()            
+        elif led0off == 8:
+            print("LED0 OFF")
+            strip.set_pixel(0, (0,0,0))
+            strip.show()
+        
+        response = html 
+        
+        cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
+        cl.send(response)
+        cl.close()
+        
+    except OSError as e:
+        cl.close()
+        print("Connection closed")
